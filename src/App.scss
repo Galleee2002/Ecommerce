@@ -1,0 +1,345 @@
+// App.scss - Diseño minimalista y elegante
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  line-height: 1.6;
+  color: #1a1a1a;
+  background-color: #fafafa;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+// Variables globales
+:root {
+  --color-primary: #1a1a1a;
+  --color-secondary: #666666;
+  --color-light: #f5f5f5;
+  --color-lighter: #fafafa;
+  --color-border: #e5e5e5;
+  --color-accent: #1a1a1a;
+
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 3rem;
+  --spacing-xl: 4rem;
+  --spacing-2xl: 6rem;
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+}
+
+// Container minimalista
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+
+  @media (min-width: 1200px) {
+    padding: 0 var(--spacing-lg);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 var(--spacing-sm);
+  }
+}
+
+// Secciones minimalistas
+.section {
+  padding: var(--spacing-2xl) 0;
+
+  @media (max-width: 768px) {
+    padding: var(--spacing-xl) 0;
+  }
+
+  &--light {
+    background: white;
+  }
+
+  &--dark {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  &--border {
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+// Tipografía minimalista
+.heading {
+  font-weight: var(--font-weight-light);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+
+  &--1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    margin-bottom: var(--spacing-md);
+  }
+
+  &--2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: var(--spacing-md);
+  }
+
+  &--3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: var(--spacing-sm);
+  }
+}
+
+.text {
+  font-size: 1.125rem;
+  color: var(--color-secondary);
+  line-height: 1.7;
+  max-width: 65ch;
+
+  &--center {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  &--large {
+    font-size: 1.25rem;
+  }
+}
+
+// Showcase de categorías minimalista
+.category-showcase {
+  padding: var(--spacing-2xl) 0;
+
+  &:nth-child(even) {
+    background: white;
+  }
+
+  .category-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: var(--font-weight-light);
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-sm);
+      letter-spacing: -0.025em;
+    }
+
+    p {
+      font-size: 1.125rem;
+      color: var(--color-secondary);
+      max-width: 60ch;
+      margin: 0 auto;
+    }
+  }
+
+  .category-products {
+    margin-top: var(--spacing-xl);
+  }
+}
+
+// Colecciones minimalistas
+.collections-showcase {
+  padding: var(--spacing-2xl) 0;
+  background: var(--color-primary);
+  color: white;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+  }
+
+  h2 {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-weight-light);
+    margin-bottom: var(--spacing-xl);
+    letter-spacing: -0.025em;
+  }
+
+  .collections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+
+    .collection-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: var(--spacing-lg);
+      text-align: center;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.05),
+          transparent
+        );
+        transition: left 0.6s ease;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+
+        &::before {
+          left: 100%;
+        }
+      }
+
+      .collection-content {
+        position: relative;
+        z-index: 1;
+
+
+        h3 {
+          font-size: 1.5rem;
+          font-weight: var(--font-weight-normal);
+          margin-bottom: var(--spacing-sm);
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        }
+
+        p {
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 0.95rem;
+          height: 100px;
+        }
+      }
+    }
+  }
+}
+
+// Contacto minimalista
+.contact-section {
+  padding: var(--spacing-2xl) 0;
+  background: white;
+  border-top: 1px solid var(--color-border);
+
+  h2 {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-weight-light);
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-primary);
+    letter-spacing: -0.025em;
+  }
+
+  .contact-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-xl);
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+
+    .contact-info,
+    .contact-social {
+      h3 {
+        font-size: 1.2rem;
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--spacing-md);
+        color: var(--color-primary);
+        letter-spacing: 0.025em;
+        text-transform: uppercase;
+      }
+
+      p {
+        font-size: 1rem;
+        margin-bottom: var(--spacing-xs);
+        color: var(--color-secondary);
+      }
+    }
+
+    .social-links {
+      display: flex;
+      gap: var(--spacing-sm);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+// Footer minimalista
+.footer {
+  background: var(--color-primary);
+  color: rgba(255, 255, 255, 0.7);
+  padding: var(--spacing-md) 0;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  p {
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-normal);
+    letter-spacing: 0.025em;
+  }
+}
+
+// Utilidades
+.text-center {
+  text-align: center;
+}
+.mb-0 {
+  margin-bottom: 0;
+}
+.mb-sm {
+  margin-bottom: var(--spacing-sm);
+}
+.mb-md {
+  margin-bottom: var(--spacing-md);
+}
+.mb-lg {
+  margin-bottom: var(--spacing-lg);
+}
+
+// Responsive
+@media (max-width: 768px) {
+  :root {
+    --spacing-xl: 3rem;
+    --spacing-2xl: 4rem;
+  }
+
+  .collections-showcase .collections-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .contact-section .contact-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+}

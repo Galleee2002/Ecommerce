@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo, useCallback, useMemo } from "react";
 import "./productSection.scss";
-import { Product } from "../../contexts/CartContext";
+import { Product, getProductImage } from "../../contexts/CartContext";
 import { useWishlist } from "../../contexts/WishlistContext";
 
 interface ProductCardProps {
@@ -30,158 +30,215 @@ interface ProductSectionProps {
   itemsPerRow?: number;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  id,
-  name,
-  price,
-  originalPrice,
-  image,
-  category,
-  isNew = false,
-  isSale = false,
-  colors = [],
-  sizes = [],
-  onAddToCart = () => {},
-  onWishlistToggle = () => {},
-  onQuickView = () => {},
-}) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [selectedColor, setSelectedColor] = useState("");
-  const [selectedSize, setSelectedSize] = useState("");
-  const { isInWishlist } = useWishlist();
+const ProductCard: React.FC<ProductCardProps> = memo(
+  ({
+    id,
+    name,
+    price,
+    originalPrice,
+    image,
+    category,
+    isNew = false,
+    isSale = false,
+    colors = [],
+    sizes = [],
+    onAddToCart = () => {},
+    onWishlistToggle = () => {},
+    onQuickView = () => {},
+  }) => {
+    const [isHovered, setIsHovered] = useState(false);
+    const [selectedColor, setSelectedColor] = useState(colors[0] || "");
+    const [selectedSize, setSelectedSize] = useState("");
+    const [currentImage, setCurrentImage] = useState(image);
+    const [preloadedImages, setPreloadedImages] = useState<Set<string>>(
+      new Set()
+    );
+    const { isInWishlist } = useWishlist();
 
-  const handleAddToCart = () => {
-    onAddToCart(id);
-    console.log(`Producto ${id} agregado al carrito`);
-  };
+    const discountPercentage = useMemo(
+      () =>
+        originalPrice
+          ? Math.round(((originalPrice - price) / originalPrice) * 100)
+          : 0,
+      [originalPrice, price]
+    );
 
-  const handleQuickView = () => {
-    onQuickView(id);
-    console.log(`Vista rápida del producto ${id}`);
-  };
+    const preloadImage = useCallback(
+      (src: string) => {
+        if (!preloadedImages.has(src)) {
+          const img = new Image();
+          img.src = src;
+          setPreloadedImages((prev) => new Set(prev).add(src));
+        }
+      },
+      [preloadedImages]
+    );
 
-  const discountPercentage = originalPrice
-    ? Math.round(((originalPrice - price) / originalPrice) * 100)
-    : 0;
+    useEffect(() => {
+      if (colors.length > 0) {
+        colors.slice(0, 3).forEach((color) => {
+          const imageSrc = getProductImage(id, color);
+          preloadImage(imageSrc);
+        });
+      }
+    }, [id, colors, preloadImage]);
 
-  return (
-    <div
-      className="product-card"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Badges */}
-      <div className="product-card__badges">
-        {isNew && (
-          <span className="product-card__badge product-card__badge--new">
-            Nuevo
-          </span>
-        )}
-        {isSale && (
-          <span className="product-card__badge product-card__badge--sale">
-            -{discountPercentage}%
-          </span>
-        )}
-      </div>
+    const handleColorChange = useCallback(
+      (color: string) => {
+        setSelectedColor(color);
+        const newImage = getProductImage(id, color);
+        setCurrentImage(newImage);
+        preloadImage(newImage);
+      },
+      [id, preloadImage]
+    );
 
-      {/* Imagen del producto */}
-      <div className="product-card__image-container">
-        <img src={image} alt={name} className="product-card__image" />
+    const handleAddToCart = useCallback(() => {
+      onAddToCart(id);
+    }, [id, onAddToCart]);
 
-        {/* Overlay con acciones */}
-        <div className="product-card__overlay">
-          <div className="product-card__actions">
-            <button
-              className="product-card__action-btn"
-              onClick={handleQuickView}
-              aria-label="Vista rápida"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-            </button>
-            <button
-              className="product-card__action-btn"
-              onClick={() => onWishlistToggle(id)}
-              aria-label="Agregar a favoritos"
-            >
-              {isInWishlist(id) ? "❤️" : "🤍"}
-            </button>
-          </div>
-        </div>
-      </div>
+    const handleQuickView = useCallback(() => {
+      onQuickView(id);
+    }, [id, onQuickView]);
 
-      {/* Información del producto */}
-      <div className="product-card__info">
-        <div className="product-card__category">{category}</div>
-        <h3 className="product-card__name">{name}</h3>
+    const handleWishlistToggle = useCallback(() => {
+      onWishlistToggle(id);
+    }, [id, onWishlistToggle]);
 
-        {/* Precios */}
-        <div className="product-card__price">
-          <span className="product-card__current-price">
-            ${price.toLocaleString()}
-          </span>
-          {originalPrice && (
-            <span className="product-card__original-price">
-              ${originalPrice.toLocaleString()}
+    const handleMouseEnter = useCallback(() => {
+      setIsHovered(true);
+      if (colors.length > 3) {
+        colors.slice(3, 6).forEach((color) => {
+          const imageSrc = getProductImage(id, color);
+          preloadImage(imageSrc);
+        });
+      }
+    }, [colors, id, preloadImage]);
+
+    return (
+      <div
+        className="product-card"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="product-card__badges">
+          {isNew && (
+            <span className="product-card__badge product-card__badge--new">
+              Nuevo
+            </span>
+          )}
+          {isSale && (
+            <span className="product-card__badge product-card__badge--sale">
+              -{discountPercentage}%
             </span>
           )}
         </div>
 
-        {/* Colores disponibles */}
-        {colors.length > 0 && (
-          <div className="product-card__colors">
-            {colors.map((color, index) => (
-              <button
-                key={index}
-                className={`product-card__color ${
-                  selectedColor === color ? "product-card__color--selected" : ""
-                }`}
-                style={{ backgroundColor: color }}
-                onClick={() => setSelectedColor(color)}
-                aria-label={`Color ${color}`}
-              />
-            ))}
-          </div>
-        )}
+        <div className="product-card__image-container">
+          <img
+            src={currentImage}
+            alt={name}
+            className="product-card__image"
+            loading="lazy"
+          />
 
-        {/* Tallas disponibles */}
-        {sizes.length > 0 && (
-          <div className="product-card__sizes">
-            {sizes.slice(0, 5).map((size, index) => (
+          <div className="product-card__overlay">
+            <div className="product-card__actions">
               <button
-                key={index}
-                className={`product-card__size ${
-                  selectedSize === size ? "product-card__size--selected" : ""
-                }`}
-                onClick={() => setSelectedSize(size)}
+                className="product-card__action-btn"
+                onClick={handleQuickView}
+                aria-label="Vista rápida"
               >
-                {size}
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
               </button>
-            ))}
-            {sizes.length > 5 && (
-              <span className="product-card__size product-card__size--more">
-                +{sizes.length - 5}
+              <button
+                className="product-card__action-btn"
+                onClick={handleWishlistToggle}
+                aria-label="Agregar a favoritos"
+              >
+                {isInWishlist(id) ? "❤️" : "🤍"}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="product-card__info">
+          <div className="product-card__category">{category}</div>
+          <h3 className="product-card__name">{name}</h3>
+
+          <div className="product-card__price">
+            <span className="product-card__current-price">
+              ${price.toLocaleString()}
+            </span>
+            {originalPrice && (
+              <span className="product-card__original-price">
+                ${originalPrice.toLocaleString()}
               </span>
             )}
           </div>
-        )}
 
-        <button className="product-card__add-to-cart" onClick={handleAddToCart}>
-          Agregar al carrito
-        </button>
+          {colors.length > 0 && (
+            <div className="product-card__colors">
+              {colors.map((color) => (
+                <button
+                  key={color}
+                  className={`product-card__color ${
+                    selectedColor === color
+                      ? "product-card__color--selected"
+                      : ""
+                  }`}
+                  style={{ backgroundColor: color }}
+                  onClick={() => handleColorChange(color)}
+                  aria-label={`Color ${color}`}
+                />
+              ))}
+            </div>
+          )}
+
+          {sizes.length > 0 && (
+            <div className="product-card__sizes">
+              {sizes.slice(0, 5).map((size) => (
+                <button
+                  key={size}
+                  className={`product-card__size ${
+                    selectedSize === size ? "product-card__size--selected" : ""
+                  }`}
+                  onClick={() => setSelectedSize(size)}
+                >
+                  {size}
+                </button>
+              ))}
+              {sizes.length > 5 && (
+                <span className="product-card__size product-card__size--more">
+                  +{sizes.length - 5}
+                </span>
+              )}
+            </div>
+          )}
+
+          <button
+            className="product-card__add-to-cart"
+            onClick={handleAddToCart}
+          >
+            Agregar al carrito
+          </button>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
+
+ProductCard.displayName = "ProductCard";
 
 const ProductSection: React.FC<ProductSectionProps> = ({
   products,
@@ -196,36 +253,51 @@ const ProductSection: React.FC<ProductSectionProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
   const [sortBy, setSortBy] = useState<string>("name");
 
-  // Obtener categorías únicas
-  const categories = [
-    "Todos",
-    ...Array.from(new Set(products.map((p) => p.category))),
-  ];
+  const categories = useMemo(
+    () => ["Todos", ...Array.from(new Set(products.map((p) => p.category)))],
+    [products]
+  );
 
-  // Filtrar productos
-  const filteredProducts =
-    selectedCategory === "Todos"
-      ? products
-      : products.filter((product) => product.category === selectedCategory);
+  const filteredProducts = useMemo(
+    () =>
+      selectedCategory === "Todos"
+        ? products
+        : products.filter((product) => product.category === selectedCategory),
+    [products, selectedCategory]
+  );
 
-  // Ordenar productos
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    switch (sortBy) {
-      case "price-low":
-        return a.price - b.price;
-      case "price-high":
-        return b.price - a.price;
-      case "name":
-        return a.name.localeCompare(b.name);
-      default:
-        return 0;
-    }
-  });
+  const sortedProducts = useMemo(() => {
+    return [...filteredProducts].sort((a, b) => {
+      switch (sortBy) {
+        case "price-low":
+          return a.price - b.price;
+        case "price-high":
+          return b.price - a.price;
+        case "name":
+          return a.name.localeCompare(b.name);
+        default:
+          return 0;
+      }
+    });
+  }, [filteredProducts, sortBy]);
+
+  const handleCategoryChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setSelectedCategory(e.target.value);
+    },
+    []
+  );
+
+  const handleSortChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setSortBy(e.target.value);
+    },
+    []
+  );
 
   return (
     <section className="product-section">
       <div className="container">
-        {/* Header de la sección */}
         {(title || subtitle) && (
           <div className="product-section__header">
             {title && <h2 className="product-section__title">{title}</h2>}
@@ -235,7 +307,6 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           </div>
         )}
 
-        {/* Filtros y ordenamiento */}
         {showFilters && (
           <div className="product-section__filters">
             <div className="product-section__filter-group">
@@ -243,7 +314,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
               <select
                 id="category-filter"
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={handleCategoryChange}
                 className="product-section__select"
               >
                 {categories.map((category) => (
@@ -259,7 +330,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
               <select
                 id="sort-filter"
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
+                onChange={handleSortChange}
                 className="product-section__select"
               >
                 <option value="name">Nombre</option>
@@ -290,7 +361,6 @@ const ProductSection: React.FC<ProductSectionProps> = ({
           ))}
         </div>
 
-        {/* Mensaje si no hay productos */}
         {sortedProducts.length === 0 && (
           <div className="product-section__empty">
             <p>No se encontraron productos en esta categoría.</p>

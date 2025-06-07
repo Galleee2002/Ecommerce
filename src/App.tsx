@@ -7,7 +7,12 @@ import Contact from "./components/contact-section/Contact";
 import Footer from "./components/footer-section/Footer";
 import ProductSection from "./components/product-section/ProductSection";
 import Cart, { CartIcon } from "./components/cart/Cart";
-import { CartProvider, useCart, Product } from "./contexts/CartContext";
+import {
+  CartProvider,
+  useCart,
+  Product,
+  getProductImage,
+} from "./contexts/CartContext";
 import { WishlistProvider, useWishlist } from "./contexts/WishlistContext";
 
 const AppContent: React.FC = () => {
@@ -18,11 +23,10 @@ const AppContent: React.FC = () => {
   const productos: Product[] = [
     {
       id: 1,
-      name: "Camisa Casual Moderna",
-      price: 45000,
-      originalPrice: 55000,
-      image:
-        "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=500&fit=crop",
+      name: "Remera Lisa",
+      price: 21000,
+      originalPrice: 30000,
+      image: getProductImage(1, "#ffffff"),
       category: "Camisas",
       colors: [
         "#ffffff",
@@ -35,14 +39,13 @@ const AppContent: React.FC = () => {
         "#dc2626",
         "#ea580c",
       ],
-      sizes: ["S", "M", "L", "XL"],
+      sizes: ["S", "M", "L", "XL", "XXL"],
     },
     {
       id: 2,
-      name: "Jean Slim Fit Unisex",
-      price: 75000,
-      image:
-        "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=500&fit=crop",
+      name: "Hoodie Liso",
+      price: 44000,
+      image: getProductImage(2, "#ffffff"),
       category: "Pantalones",
       colors: [
         "#ffffff",
@@ -61,8 +64,7 @@ const AppContent: React.FC = () => {
       id: 3,
       name: "Polo Clásico",
       price: 35000,
-      image:
-        "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=400&h=500&fit=crop",
+      image: getProductImage(3, "#ffffff"),
       category: "Polos",
       colors: [
         "#ffffff",
@@ -82,8 +84,7 @@ const AppContent: React.FC = () => {
       name: "Chaqueta Denim",
       price: 85000,
       originalPrice: 110000,
-      image:
-        "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=500&fit=crop",
+      image: getProductImage(4, "#ffffff"),
       category: "Chaquetas",
       colors: [
         "#ffffff",
@@ -102,8 +103,7 @@ const AppContent: React.FC = () => {
       id: 5,
       name: "Sneakers Classic",
       price: 95000,
-      image:
-        "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=500&fit=crop",
+      image: getProductImage(5, "#ffffff"),
       category: "Calzado",
       colors: [
         "#ffffff",
@@ -122,8 +122,7 @@ const AppContent: React.FC = () => {
       id: 6,
       name: "Camiseta Premium",
       price: 28000,
-      image:
-        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop",
+      image: getProductImage(6, "#ffffff"),
       category: "Camisetas",
       colors: [
         "#ffffff",
@@ -143,8 +142,7 @@ const AppContent: React.FC = () => {
       name: "Shorts Casual",
       price: 35000,
       originalPrice: 45000,
-      image:
-        "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400&h=500&fit=crop",
+      image: getProductImage(7, "#ffffff"),
       category: "Shorts",
       colors: [
         "#ffffff",
@@ -163,8 +161,7 @@ const AppContent: React.FC = () => {
       id: 8,
       name: "Sudadera Oversize",
       price: 65000,
-      image:
-        "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=500&fit=crop",
+      image: getProductImage(8, "#ffffff"),
       category: "Sudaderas",
       colors: [
         "#ffffff",
@@ -183,8 +180,7 @@ const AppContent: React.FC = () => {
       id: 9,
       name: "Buzo hoodie",
       price: 75000,
-      image:
-        "https://via.placeholder.com/400x500/f3f4f6/6b7280?text=Próximamente",
+      image: getProductImage(9, "#ffffff"),
       category: "Nuevo",
       colors: [
         "#ffffff",
@@ -210,7 +206,6 @@ const AppContent: React.FC = () => {
   };
 
   const handleWishlistToggle = (productId: number) => {
-    // 🔥 DEBE ESTAR
     const product = productos.find((p) => p.id === productId);
     if (product) {
       if (isInWishlist(productId)) {

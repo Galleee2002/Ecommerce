@@ -1,4 +1,4 @@
-// App.scss - Diseño minimalista y elegante
+// App.scss - Diseño minimalista y elegante con sistema responsive mejorado
 * {
   margin: 0;
   padding: 0;
@@ -20,7 +20,7 @@ body {
   min-height: 100vh;
 }
 
-// Variables globales
+// Variables globales con responsive mejorado
 :root {
   --color-primary: #1a1a1a;
   --color-secondary: #666666;
@@ -29,41 +29,109 @@ body {
   --color-border: #e5e5e5;
   --color-accent: #1a1a1a;
 
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 2rem;
-  --spacing-lg: 3rem;
-  --spacing-xl: 4rem;
-  --spacing-2xl: 6rem;
+  // Spacing responsive con clamp
+  --spacing-xs: clamp(0.25rem, 1vw, 0.5rem);
+  --spacing-sm: clamp(0.5rem, 2vw, 1rem);
+  --spacing-md: clamp(1rem, 3vw, 2rem);
+  --spacing-lg: clamp(2rem, 4vw, 3rem);
+  --spacing-xl: clamp(3rem, 5vw, 4rem);
+  --spacing-2xl: clamp(4rem, 6vw, 6rem);
+
+  // Container responsive
+  --container-padding: clamp(1rem, 3vw, 3rem);
+  --container-max-width: 1200px;
+
+  // Typography responsive
+  --font-size-xs: clamp(0.75rem, 1.5vw, 0.875rem);
+  --font-size-sm: clamp(0.875rem, 2vw, 1rem);
+  --font-size-base: clamp(1rem, 2.5vw, 1.125rem);
+  --font-size-lg: clamp(1.125rem, 3vw, 1.25rem);
+  --font-size-xl: clamp(1.25rem, 3.5vw, 1.5rem);
+  --font-size-2xl: clamp(1.5rem, 4vw, 2rem);
+  --font-size-3xl: clamp(2rem, 5vw, 3rem);
+  --font-size-4xl: clamp(2.5rem, 6vw, 4rem);
 
   --font-weight-light: 300;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+
+  // Grid responsive
+  --grid-gap: clamp(1rem, 3vw, 2rem);
+  --grid-columns-mobile: 1;
+  --grid-columns-tablet: 2;
+  --grid-columns-desktop: 3;
 }
 
-// Container minimalista
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
+// Breakpoints como mixins
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
 
+@mixin tablet {
+  @media (min-width: 768px) and (max-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin large-desktop {
   @media (min-width: 1200px) {
-    padding: 0 var(--spacing-lg);
-  }
-
-  @media (max-width: 768px) {
-    padding: 0 var(--spacing-sm);
+    @content;
   }
 }
 
-// Secciones minimalistas
+// Container responsive mejorado
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+  width: 100%;
+
+  &--narrow {
+    max-width: 800px;
+  }
+
+  &--wide {
+    max-width: 1400px;
+  }
+
+  &--full {
+    max-width: none;
+    padding: 0;
+  }
+}
+
+// Secciones responsive mejoradas
 .section {
   padding: var(--spacing-2xl) 0;
 
-  @media (max-width: 768px) {
+  @include mobile {
     padding: var(--spacing-xl) 0;
+  }
+
+  &--compact {
+    padding: var(--spacing-lg) 0;
+
+    @include mobile {
+      padding: var(--spacing-md) 0;
+    }
+  }
+
+  &--spacious {
+    padding: calc(var(--spacing-2xl) * 1.5) 0;
+
+    @include mobile {
+      padding: var(--spacing-2xl) 0;
+    }
   }
 
   &--light {
@@ -80,30 +148,134 @@ body {
   }
 }
 
-// Tipografía minimalista
+// Sistema de grid responsive
+.grid {
+  display: grid;
+  gap: var(--grid-gap);
+
+  &--responsive {
+    grid-template-columns: repeat(var(--grid-columns-mobile), 1fr);
+
+    @include tablet {
+      grid-template-columns: repeat(var(--grid-columns-tablet), 1fr);
+    }
+
+    @include desktop {
+      grid-template-columns: repeat(var(--grid-columns-desktop), 1fr);
+    }
+  }
+
+  &--auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &--auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  // Variaciones específicas
+  &--2-cols {
+    grid-template-columns: 1fr;
+
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &--3-cols {
+    grid-template-columns: 1fr;
+
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include desktop {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &--4-cols {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include desktop {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+// Flex responsive
+.flex {
+  display: flex;
+  gap: var(--spacing-md);
+
+  &--responsive {
+    flex-direction: column;
+
+    @include tablet {
+      flex-direction: row;
+    }
+  }
+
+  &--wrap {
+    flex-wrap: wrap;
+  }
+
+  &--center {
+    justify-content: center;
+    align-items: center;
+  }
+
+  &--between {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &--column {
+    flex-direction: column;
+  }
+}
+
+// Tipografía responsive mejorada
 .heading {
   font-weight: var(--font-weight-light);
   line-height: 1.2;
   letter-spacing: -0.025em;
 
   &--1 {
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-size: var(--font-size-4xl);
     margin-bottom: var(--spacing-md);
   }
 
   &--2 {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: var(--font-size-3xl);
     margin-bottom: var(--spacing-md);
   }
 
   &--3 {
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  &--4 {
+    font-size: var(--font-size-xl);
     margin-bottom: var(--spacing-sm);
   }
 }
 
 .text {
-  font-size: 1.125rem;
+  font-size: var(--font-size-base);
   color: var(--color-secondary);
   line-height: 1.7;
   max-width: 65ch;
@@ -114,11 +286,68 @@ body {
   }
 
   &--large {
-    font-size: 1.25rem;
+    font-size: var(--font-size-lg);
+  }
+
+  &--small {
+    font-size: var(--font-size-sm);
+  }
+
+  &--responsive {
+    @include mobile {
+      text-align: center;
+    }
   }
 }
 
-// Showcase de categorías minimalista
+// Utilidades responsive
+.hide {
+  &--mobile {
+    @include mobile {
+      display: none !important;
+    }
+  }
+
+  &--tablet {
+    @include tablet {
+      display: none !important;
+    }
+  }
+
+  &--desktop {
+    @include desktop {
+      display: none !important;
+    }
+  }
+}
+
+.show {
+  &--mobile-only {
+    display: block;
+
+    @include tablet {
+      display: none !important;
+    }
+  }
+
+  &--tablet-up {
+    display: none;
+
+    @include tablet {
+      display: block;
+    }
+  }
+
+  &--desktop-only {
+    display: none;
+
+    @include desktop {
+      display: block;
+    }
+  }
+}
+
+// Showcase de categorías responsive mejorado
 .category-showcase {
   padding: var(--spacing-2xl) 0;
 
@@ -130,8 +359,12 @@ body {
     text-align: center;
     margin-bottom: var(--spacing-xl);
 
+    @include mobile {
+      margin-bottom: var(--spacing-lg);
+    }
+
     h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: var(--font-size-3xl);
       font-weight: var(--font-weight-light);
       color: var(--color-primary);
       margin-bottom: var(--spacing-sm);
@@ -139,19 +372,24 @@ body {
     }
 
     p {
-      font-size: 1.125rem;
+      font-size: var(--font-size-lg);
       color: var(--color-secondary);
       max-width: 60ch;
       margin: 0 auto;
+
+      @include mobile {
+        font-size: var(--font-size-base);
+      }
     }
   }
 
   .category-products {
     margin-top: var(--spacing-xl);
+    @extend .grid--auto-fit;
   }
 }
 
-// Colecciones minimalistas
+// Colecciones responsive mejoradas
 .collections-showcase {
   padding: var(--spacing-2xl) 0;
   background: var(--color-primary);
@@ -175,16 +413,19 @@ body {
 
   h2 {
     text-align: center;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: var(--font-size-3xl);
     font-weight: var(--font-weight-light);
     margin-bottom: var(--spacing-xl);
     letter-spacing: -0.025em;
   }
 
   .collections-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    @extend .grid--3-cols;
     gap: var(--spacing-lg);
+
+    @include mobile {
+      gap: var(--spacing-md);
+    }
 
     .collection-item {
       background: rgba(255, 255, 255, 0.02);
@@ -194,6 +435,10 @@ body {
       transition: all 0.4s ease;
       position: relative;
       overflow: hidden;
+
+      @include mobile {
+        padding: var(--spacing-md);
+      }
 
       &::before {
         content: "";
@@ -219,32 +464,44 @@ body {
         &::before {
           left: 100%;
         }
+
+        @include mobile {
+          transform: none;
+        }
       }
 
       .collection-content {
         position: relative;
         z-index: 1;
 
-
         h3 {
-          font-size: 1.5rem;
+          font-size: var(--font-size-xl);
           font-weight: var(--font-weight-normal);
           margin-bottom: var(--spacing-sm);
           letter-spacing: 0.05em;
           text-transform: uppercase;
+
+          @include mobile {
+            font-size: var(--font-size-lg);
+          }
         }
 
         p {
           color: rgba(255, 255, 255, 0.7);
-          font-size: 0.95rem;
-          height: 100px;
+          font-size: var(--font-size-sm);
+          height: auto;
+          min-height: 60px;
+
+          @include mobile {
+            min-height: auto;
+          }
         }
       }
     }
   }
 }
 
-// Contacto minimalista
+// Contacto responsive mejorado
 .contact-section {
   padding: var(--spacing-2xl) 0;
   background: white;
@@ -252,7 +509,7 @@ body {
 
   h2 {
     text-align: center;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: var(--font-size-3xl);
     font-weight: var(--font-weight-light);
     margin-bottom: var(--spacing-xl);
     color: var(--color-primary);
@@ -260,17 +517,21 @@ body {
   }
 
   .contact-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    @extend .grid--2-cols;
     gap: var(--spacing-xl);
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
 
+    @include mobile {
+      gap: var(--spacing-lg);
+      text-align: center;
+    }
+
     .contact-info,
     .contact-social {
       h3 {
-        font-size: 1.2rem;
+        font-size: var(--font-size-lg);
         font-weight: var(--font-weight-medium);
         margin-bottom: var(--spacing-md);
         color: var(--color-primary);
@@ -279,7 +540,7 @@ body {
       }
 
       p {
-        font-size: 1rem;
+        font-size: var(--font-size-base);
         margin-bottom: var(--spacing-xs);
         color: var(--color-secondary);
       }
@@ -290,11 +551,15 @@ body {
       gap: var(--spacing-sm);
       justify-content: center;
       flex-wrap: wrap;
+
+      @include mobile {
+        gap: var(--spacing-xs);
+      }
     }
   }
 }
 
-// Footer minimalista
+// Footer responsive
 .footer {
   background: var(--color-primary);
   color: rgba(255, 255, 255, 0.7);
@@ -303,18 +568,37 @@ body {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   p {
-    font-size: 0.875rem;
+    font-size: var(--font-size-sm);
     font-weight: var(--font-weight-normal);
-    letter-spacing: 0.025em;
+    letter-spacing: (0.025em);
   }
 }
 
-// Utilidades
+// Utilidades de espaciado responsive
 .text-center {
   text-align: center;
 }
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+
+@include mobile {
+  .text-center-mobile {
+    text-align: center;
+  }
+  .text-left-mobile {
+    text-align: left;
+  }
+}
+
 .mb-0 {
   margin-bottom: 0;
+}
+.mb-xs {
+  margin-bottom: var(--spacing-xs);
 }
 .mb-sm {
   margin-bottom: var(--spacing-sm);
@@ -325,21 +609,54 @@ body {
 .mb-lg {
   margin-bottom: var(--spacing-lg);
 }
+.mb-xl {
+  margin-bottom: var(--spacing-xl);
+}
 
-// Responsive
-@media (max-width: 768px) {
+.mt-0 {
+  margin-top: 0;
+}
+.mt-xs {
+  margin-top: var(--spacing-xs);
+}
+.mt-sm {
+  margin-top: var(--spacing-sm);
+}
+.mt-md {
+  margin-top: var(--spacing-md);
+}
+.mt-lg {
+  margin-top: var(--spacing-lg);
+}
+.mt-xl {
+  margin-top: var(--spacing-xl);
+}
+
+.p-xs {
+  padding: var(--spacing-xs);
+}
+.p-sm {
+  padding: var(--spacing-sm);
+}
+.p-md {
+  padding: var(--spacing-md);
+}
+.p-lg {
+  padding: var(--spacing-lg);
+}
+.p-xl {
+  padding: var(--spacing-xl);
+}
+
+// Media queries específicas para ajustes finos
+@media (max-width: 480px) {
   :root {
-    --spacing-xl: 3rem;
-    --spacing-2xl: 4rem;
+    --container-padding: 1rem;
   }
+}
 
-  .collections-showcase .collections-grid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-md);
-  }
-
-  .contact-section .contact-content {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
+@media (min-width: 1400px) {
+  :root {
+    --container-max-width: 1400px;
   }
 }

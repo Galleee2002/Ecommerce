@@ -53,11 +53,11 @@
 
   &--outline-primary {
     background-color: transparent;
-    color: #3b82f6;
-    border-color: #3b82f6;
+    color: #ffff;
+    border-color: #ffff;
 
     &:hover:not(:disabled) {
-      background-color: #3b82f6;
+      background-color: #1a1a1a;
       color: white;
       transform: translateY(-1px);
       box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);

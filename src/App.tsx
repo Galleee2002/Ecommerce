@@ -290,69 +290,69 @@ const AppContent: React.FC = () => {
         </section>
 
         <section id="collections" className="collections-showcase section">
-          <div className="container">
-            <div className="section-header">
-              <h2>Nuestras Colecciones</h2>
-              <p>Explora nuestras diferentes líneas de productos</p>
-            </div>
+  <div className="container">
+    <div className="section-header">
+      <h2>Nuestras Colecciones</h2>
+      <p>Explora nuestras diferentes líneas de productos</p>
+    </div>
 
-            <div className="collections-grid">
-              <div className="collection-item">
-                <div className="collection-image">
-                  <img
-                    src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=400&fit=crop"
-                    alt="Streetwear Collection"
-                  />
-                </div>
-                <div className="collection-content">
-                  <h3>Streetwear</h3>
-                  <p>Estilo urbano y cómodo para el día a día</p>
-                  <Button
-                    text="Ver Colección"
-                    onClick={() => console.log("Streetwear")}
-                    variant="outline-primary"
-                  />
-                </div>
-              </div>
+    <div className="collections-grid">
+      <div className="collection-item">
+        <div className="collection-image">
+          <img
+            src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=400&fit=crop"
+            alt="Streetwear Collection"
+          />
+        </div>
+        <div className="collection-content">
+          <h3>Streetwear</h3>
+          <p>Estilo urbano y cómodo para el día a día</p>
+          <Button
+            text="Ver Colección"
+            onClick={() => console.log("Streetwear")}
+            variant="outline-primary"
+          />
+        </div>
+      </div>
 
-              <div className="collection-item">
-                <div className="collection-image">
-                  <img
-                    src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&h=400&fit=crop"
-                    alt="Formal Collection"
-                  />
-                </div>
-                <div className="collection-content">
-                  <h3>Formal</h3>
-                  <p>Elegancia para ocasiones especiales</p>
-                  <Button
-                    text="Ver Colección"
-                    onClick={() => console.log("Formal")}
-                    variant="outline-primary"
-                  />
-                </div>
-              </div>
+      <div className="collection-item">
+        <div className="collection-image">
+          <img
+            src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&h=400&fit=crop"
+            alt="Formal Collection"
+          />
+        </div>
+        <div className="collection-content">
+          <h3>Formal</h3>
+          <p>Elegancia para ocasiones especiales</p>
+          <Button
+            text="Ver Colección"
+            onClick={() => console.log("Formal")}
+            variant="outline-primary"
+          />
+        </div>
+      </div>
 
-              <div className="collection-item">
-                <div className="collection-image">
-                  <img
-                    src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=400&fit=crop"
-                    alt="Casual Collection"
-                  />
-                </div>
-                <div className="collection-content">
-                  <h3>Casual</h3>
-                  <p>Comodidad y estilo para cualquier momento</p>
-                  <Button
-                    text="Ver Colección"
-                    onClick={() => console.log("Casual")}
-                    variant="outline-primary"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+      <div className="collection-item">
+        <div className="collection-image">
+          <img
+            src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=400&fit=crop"
+            alt="Casual Collection"
+          />
+        </div>
+        <div className="collection-content">
+          <h3>Casual</h3>
+          <p>Comodidad y estilo para cualquier momento</p>
+          <Button
+            text="Ver Colección"
+            onClick={() => console.log("Casual")}
+            variant="outline-primary"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
         <Contact />
       </main>

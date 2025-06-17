@@ -106,27 +106,36 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
             <h4 className="footer__contact-title">Conecta con nosotros</h4>
             <div className="footer__contact-info">
               <p className="footer__contact-item">
-                <span className="footer__contact-icon">📧</span>
+                <span className="footer__contact-icon">
+                  <i className='bx bx-envelope'></i>
+                </span>
                 info@fueradecontexto.com
               </p>
               <p className="footer__contact-item">
-                <span className="footer__contact-icon">📱</span>
+                <span className="footer__contact-icon">
+                  <i className='bx bx-phone'></i>
+                </span>
                 +54 11 1234-5678
               </p>
               <p className="footer__contact-item">
-                <span className="footer__contact-icon">📍</span>
+                <span className="footer__contact-icon">
+                  <i className='bx bx-map'></i>
+                </span>
                 Buenos Aires, Argentina
               </p>
             </div>
 
             <div className="footer__social">
               <a href="#" className="footer__social-link">
+                <i className='bx bxl-instagram'></i>
                 <span>Instagram</span>
               </a>
               <a href="#" className="footer__social-link">
+                <i className='bx bxl-facebook'></i>
                 <span>Facebook</span>
               </a>
               <a href="#" className="footer__social-link">
+                <i className='bx bxl-twitter'></i>
                 <span>Twitter</span>
               </a>
             </div>
@@ -146,7 +155,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
           <div className="footer__credits">
             <p className="footer__credits-text">
-              Diseñado con <span className="footer__heart">♥</span> en Buenos
+              Diseñado con <i className='bx bx-heart' style={{ color: '#e91e63' }}></i> en Buenos
               Aires
             </p>
           </div>

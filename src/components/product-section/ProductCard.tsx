@@ -25,7 +25,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   colors,
   sizes,
   onAddToCart,
-
   onWishlistToggle,
   onQuickView,
 }) => {
@@ -41,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               className="product-card__action-btn"
               onClick={() => onQuickView(id)}
             >
-              👁️
+              <i className='bx bx-show'></i>
             </button>
             <button
               className="product-card__action-btn"
@@ -52,7 +51,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
               }}
               aria-label="Agregar a favoritos"
             >
-              {isInWishlist(id) ? "❤️" : "🤍"}
+              {isInWishlist(id) ? 
+                <i className='bx bxs-heart' style={{ color: '#e91e63' }}></i> : 
+                <i className='bx bx-heart'></i>
+              }
             </button>
           </div>
         </div>

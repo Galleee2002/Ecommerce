@@ -33,13 +33,17 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
         <div className="cart-header">
           <h2>Carrito de Compras</h2>
           <button className="cart-close" onClick={onClose}>
-            ×
+            <i className="bx bx-x"></i>
           </button>
         </div>
 
         <div className="cart-content">
           {state.items.length === 0 ? (
             <div className="cart-empty">
+              <i 
+                className="bx bx-cart" 
+                style={{ fontSize: '3rem', color: '#ccc', marginBottom: '1rem' }}
+              ></i>
               <p>Tu carrito está vacío</p>
             </div>
           ) : (
@@ -85,7 +89,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                           }
                           className="quantity-btn"
                         >
-                          -
+                          <i className="bx bx-minus"></i>
                         </button>
                         <span className="quantity">{item.quantity}</span>
                         <button
@@ -94,7 +98,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                           }
                           className="quantity-btn"
                         >
-                          +
+                          <i className="bx bx-plus"></i>
                         </button>
                       </div>
 
@@ -102,20 +106,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                         onClick={() => removeItem(item.id)}
                         className="remove-btn"
                       >
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          style={{ width: "16px", height: "16px" }}
-                        >
-                          <polyline points="3,6 5,6 21,6"></polyline>
-                          <path d="m19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"></path>
-                          <line x1="10" y1="11" x2="10" y2="17"></line>
-                          <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
+                        <i className="bx bx-trash"></i>
                       </button>
                     </div>
                   </div>
@@ -159,18 +150,7 @@ export const CartIcon: React.FC<CartIconProps> = ({ onClick, icon }) => {
   const { state } = useCart();
 
   const defaultIcon = (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
-      <path d="M3 3h2l.4 2m0 0L6 13h12l1-8H6.4z"></path>
-      <circle cx="9" cy="20" r="1"></circle>
-      <circle cx="20" cy="20" r="1"></circle>
-    </svg>
+    <i className="bx bx-shopping-bag" style={{ fontSize: '24px' }}></i>
   );
 
   return (

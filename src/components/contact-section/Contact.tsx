@@ -104,7 +104,9 @@ const Contact: React.FC<ContactProps> = ({ className = "" }) => {
           {/* Contact Info */}
           <div className="contact__info">
             <div className="contact__info-item">
-              <div className="contact__info-icon">📍</div>
+              <div className="contact__info-icon">
+                <i className='bx bx-map'></i>
+              </div>
               <div className="contact__info-text">
                 <h4>Ubicación</h4>
                 <p>Buenos Aires, Argentina</p>
@@ -112,7 +114,9 @@ const Contact: React.FC<ContactProps> = ({ className = "" }) => {
             </div>
 
             <div className="contact__info-item">
-              <div className="contact__info-icon">📧</div>
+              <div className="contact__info-icon">
+                <i className='bx bx-envelope'></i>
+              </div>
               <div className="contact__info-text">
                 <h4>Email</h4>
                 <p>info@fueradecontexto.com</p>
@@ -120,7 +124,9 @@ const Contact: React.FC<ContactProps> = ({ className = "" }) => {
             </div>
 
             <div className="contact__info-item">
-              <div className="contact__info-icon">📱</div>
+              <div className="contact__info-icon">
+                <i className='bx bx-phone'></i>
+              </div>
               <div className="contact__info-text">
                 <h4>Teléfono</h4>
                 <p>+54 11 1234-5678</p>
@@ -132,12 +138,15 @@ const Contact: React.FC<ContactProps> = ({ className = "" }) => {
               <h4>Síguenos</h4>
               <div className="contact__social-links">
                 <a href="#" className="contact__social-link">
+                  <i className='bx bxl-instagram'></i>
                   <span>Instagram</span>
                 </a>
                 <a href="#" className="contact__social-link">
+                  <i className='bx bxl-facebook'></i>
                   <span>Facebook</span>
                 </a>
                 <a href="#" className="contact__social-link">
+                  <i className='bx bxl-twitter'></i>
                   <span>Twitter</span>
                 </a>
               </div>
@@ -211,7 +220,7 @@ const Contact: React.FC<ContactProps> = ({ className = "" }) => {
               ) : (
                 <>
                   Enviar mensaje
-                  <span className="contact__form-arrow">→</span>
+                  <i className='bx bx-right-arrow-alt contact__form-arrow'></i>
                 </>
               )}
             </button>

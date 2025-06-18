@@ -553,13 +553,17 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
         <div className="cart-header">
           <h2>Carrito de Compras</h2>
           <button className="cart-close" onClick={onClose}>
-            ×
+            <i className="bx bx-x"></i>
           </button>
         </div>
 
         <div className="cart-content">
           {state.items.length === 0 ? (
             <div className="cart-empty">
+              <i 
+                className="bx bx-cart" 
+                style={{ fontSize: '3rem', color: '#ccc', marginBottom: '1rem' }}
+              ></i>
               <p>Tu carrito está vacío</p>
             </div>
           ) : (
@@ -605,7 +609,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                           }
                           className="quantity-btn"
                         >
-                          -
+                          <i className="bx bx-minus"></i>
                         </button>
                         <span className="quantity">{item.quantity}</span>
                         <button
@@ -614,7 +618,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                           }
                           className="quantity-btn"
                         >
-                          +
+                          <i className="bx bx-plus"></i>
                         </button>
                       </div>
 
@@ -622,20 +626,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                         onClick={() => removeItem(item.id)}
                         className="remove-btn"
                       >
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          style={{ width: "16px", height: "16px" }}
-                        >
-                          <polyline points="3,6 5,6 21,6"></polyline>
-                          <path d="m19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"></path>
-                          <line x1="10" y1="11" x2="10" y2="17"></line>
-                          <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
+                        <i className="bx bx-trash"></i>
                       </button>
                     </div>
                   </div>
@@ -679,18 +670,7 @@ export const CartIcon: React.FC<CartIconProps> = ({ onClick, icon }) => {
   const { state } = useCart();
 
   const defaultIcon = (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
-      <path d="M3 3h2l.4 2m0 0L6 13h12l1-8H6.4z"></path>
-      <circle cx="9" cy="20" r="1"></circle>
-      <circle cx="20" cy="20" r="1"></circle>
-    </svg>
+    <i className="bx bx-shopping-bag" style={{ fontSize: '24px' }}></i>
   );
 
   return (
@@ -704,7 +684,6 @@ export const CartIcon: React.FC<CartIconProps> = ({ onClick, icon }) => {
 };
 
 export default Cart;
-
 ```
 
 ## src\components\cart\CartIcon.tsx
@@ -861,7 +840,9 @@ const Contact: React.FC<ContactProps> = ({ className = "" }) => {
           {/* Contact Info */}
           <div className="contact__info">
             <div className="contact__info-item">
-              <div className="contact__info-icon">📍</div>
+              <div className="contact__info-icon">
+                <i className='bx bx-map'></i>
+              </div>
               <div className="contact__info-text">
                 <h4>Ubicación</h4>
                 <p>Buenos Aires, Argentina</p>
@@ -869,7 +850,9 @@ const Contact: React.FC<ContactProps> = ({ className = "" }) => {
             </div>
 
             <div className="contact__info-item">
-              <div className="contact__info-icon">📧</div>
+              <div className="contact__info-icon">
+                <i className='bx bx-envelope'></i>
+              </div>
               <div className="contact__info-text">
                 <h4>Email</h4>
                 <p>info@fueradecontexto.com</p>
@@ -877,7 +860,9 @@ const Contact: React.FC<ContactProps> = ({ className = "" }) => {
             </div>
 
             <div className="contact__info-item">
-              <div className="contact__info-icon">📱</div>
+              <div className="contact__info-icon">
+                <i className='bx bx-phone'></i>
+              </div>
               <div className="contact__info-text">
                 <h4>Teléfono</h4>
                 <p>+54 11 1234-5678</p>
@@ -889,12 +874,15 @@ const Contact: React.FC<ContactProps> = ({ className = "" }) => {
               <h4>Síguenos</h4>
               <div className="contact__social-links">
                 <a href="#" className="contact__social-link">
+                  <i className='bx bxl-instagram'></i>
                   <span>Instagram</span>
                 </a>
                 <a href="#" className="contact__social-link">
+                  <i className='bx bxl-facebook'></i>
                   <span>Facebook</span>
                 </a>
                 <a href="#" className="contact__social-link">
+                  <i className='bx bxl-twitter'></i>
                   <span>Twitter</span>
                 </a>
               </div>
@@ -968,7 +956,7 @@ const Contact: React.FC<ContactProps> = ({ className = "" }) => {
               ) : (
                 <>
                   Enviar mensaje
-                  <span className="contact__form-arrow">→</span>
+                  <i className='bx bx-right-arrow-alt contact__form-arrow'></i>
                 </>
               )}
             </button>
@@ -980,7 +968,6 @@ const Contact: React.FC<ContactProps> = ({ className = "" }) => {
 };
 
 export default Contact;
-
 ```
 
 ## src\components\footer-section\Footer.tsx
@@ -1001,9 +988,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
   return (
     <footer className={footerClasses}>
       <div className="footer__container">
-       
         <div className="footer__content">
-      
           <div className="footer__brand">
             <h3 className="footer__brand-title">FUERADECONTEXTO</h3>
             <p className="footer__brand-tagline">Moda que rompe esquemas</p>
@@ -1013,7 +998,6 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
             </p>
           </div>
 
-        
           <div className="footer__nav">
             <div className="footer__nav-group">
               <h4 className="footer__nav-title">Navegación</h4>
@@ -1089,32 +1073,40 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
             </div>
           </div>
 
-          {/* Contact & Social */}
           <div className="footer__contact">
             <h4 className="footer__contact-title">Conecta con nosotros</h4>
             <div className="footer__contact-info">
               <p className="footer__contact-item">
-                <span className="footer__contact-icon">📧</span>
+                <span className="footer__contact-icon">
+                  <i className="bx bx-envelope"></i>
+                </span>
                 info@fueradecontexto.com
               </p>
               <p className="footer__contact-item">
-                <span className="footer__contact-icon">📱</span>
+                <span className="footer__contact-icon">
+                  <i className="bx bx-phone"></i>
+                </span>
                 +54 11 1234-5678
               </p>
               <p className="footer__contact-item">
-                <span className="footer__contact-icon">📍</span>
+                <span className="footer__contact-icon">
+                  <i className="bx  bx-globe"></i>
+                </span>
                 Buenos Aires, Argentina
               </p>
             </div>
 
             <div className="footer__social">
               <a href="#" className="footer__social-link">
+                <i className="bx bxl-instagram"></i>
                 <span>Instagram</span>
               </a>
               <a href="#" className="footer__social-link">
+                <i className="bx bxl-facebook"></i>
                 <span>Facebook</span>
               </a>
               <a href="#" className="footer__social-link">
+                <i className="bx bxl-twitter"></i>
                 <span>Twitter</span>
               </a>
             </div>
@@ -1134,8 +1126,9 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
           <div className="footer__credits">
             <p className="footer__credits-text">
-              Diseñado con <span className="footer__heart">♥</span> en Buenos
-              Aires
+              Diseñado con{" "}
+              <i className="bx bx-heart" style={{ color: "#e91e63" }}></i> en
+              Buenos Aires
             </p>
           </div>
         </div>
@@ -1374,7 +1367,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   colors,
   sizes,
   onAddToCart,
-
   onWishlistToggle,
   onQuickView,
 }) => {
@@ -1390,7 +1382,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               className="product-card__action-btn"
               onClick={() => onQuickView(id)}
             >
-              👁️
+              <i className='bx bx-show'></i>
             </button>
             <button
               className="product-card__action-btn"
@@ -1401,7 +1393,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
               }}
               aria-label="Agregar a favoritos"
             >
-              {isInWishlist(id) ? "❤️" : "🤍"}
+              {isInWishlist(id) ? 
+                <i className='bx bxs-heart' style={{ color: '#e91e63' }}></i> : 
+                <i className='bx bx-heart'></i>
+              }
             </button>
           </div>
         </div>
@@ -1432,7 +1427,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
 };
 
 export default ProductCard;
-
 ```
 
 ## src\components\product-section\ProductSection.tsx
@@ -1589,24 +1583,17 @@ const ProductCard: React.FC<ProductCardProps> = memo(
                 onClick={handleQuickView}
                 aria-label="Vista rápida"
               >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                  <circle cx="12" cy="12" r="3"></circle>
-                </svg>
+                <i className='bx bx-show'></i>
               </button>
               <button
                 className="product-card__action-btn"
                 onClick={handleWishlistToggle}
                 aria-label="Agregar a favoritos"
               >
-                {isInWishlist(id) ? "❤️" : "🤍"}
+                {isInWishlist(id) ? 
+                  <i className='bx bxs-heart' style={{ color: '#e91e63' }}></i> : 
+                  <i className='bx bx-heart'></i>
+                }
               </button>
             </div>
           </div>
@@ -1812,7 +1799,6 @@ const ProductSection: React.FC<ProductSectionProps> = ({
 };
 
 export default ProductSection;
-
 ```
 
 ## src\contexts\CartContext.tsx

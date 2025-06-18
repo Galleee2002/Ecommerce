@@ -13,9 +13,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
   return (
     <footer className={footerClasses}>
       <div className="footer__container">
-       
         <div className="footer__content">
-      
           <div className="footer__brand">
             <h3 className="footer__brand-title">FUERADECONTEXTO</h3>
             <p className="footer__brand-tagline">Moda que rompe esquemas</p>
@@ -25,7 +23,6 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
             </p>
           </div>
 
-        
           <div className="footer__nav">
             <div className="footer__nav-group">
               <h4 className="footer__nav-title">Navegación</h4>
@@ -101,25 +98,24 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
             </div>
           </div>
 
-          {/* Contact & Social */}
           <div className="footer__contact">
             <h4 className="footer__contact-title">Conecta con nosotros</h4>
             <div className="footer__contact-info">
               <p className="footer__contact-item">
                 <span className="footer__contact-icon">
-                  <i className='bx bx-envelope'></i>
+                  <i className="bx bx-envelope"></i>
                 </span>
                 info@fueradecontexto.com
               </p>
               <p className="footer__contact-item">
                 <span className="footer__contact-icon">
-                  <i className='bx bx-phone'></i>
+                  <i className="bx bx-phone"></i>
                 </span>
                 +54 11 1234-5678
               </p>
               <p className="footer__contact-item">
                 <span className="footer__contact-icon">
-                  <i className='bx bx-map'></i>
+                  <i className="bx  bx-globe"></i>
                 </span>
                 Buenos Aires, Argentina
               </p>
@@ -127,15 +123,15 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
             <div className="footer__social">
               <a href="#" className="footer__social-link">
-                <i className='bx bxl-instagram'></i>
+                <i className="bx bxl-instagram"></i>
                 <span>Instagram</span>
               </a>
               <a href="#" className="footer__social-link">
-                <i className='bx bxl-facebook'></i>
+                <i className="bx bxl-facebook"></i>
                 <span>Facebook</span>
               </a>
               <a href="#" className="footer__social-link">
-                <i className='bx bxl-twitter'></i>
+                <i className="bx bxl-twitter"></i>
                 <span>Twitter</span>
               </a>
             </div>
@@ -155,8 +151,9 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
           <div className="footer__credits">
             <p className="footer__credits-text">
-              Diseñado con <i className='bx bx-heart' style={{ color: '#e91e63' }}></i> en Buenos
-              Aires
+              Diseñado con{" "}
+              <i className="bx bx-heart" style={{ color: "#e91e63" }}></i> en
+              Buenos Aires
             </p>
           </div>
         </div>

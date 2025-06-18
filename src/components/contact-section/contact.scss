@@ -71,7 +71,7 @@ $desktop: 1200px;
   &__title {
     font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 300;
-    margin: 0 0 0.25rem 0;
+    margin: 0 0 1.5rem 0; // Aumenté el margen inferior para dar espacio
     letter-spacing: -0.02em;
 
     &-main {
@@ -83,7 +83,7 @@ $desktop: 1200px;
       &::after {
         content: "";
         position: absolute;
-        bottom: -0.1em;
+        bottom: -0.75rem; // Cambié de -0.1em a -0.75rem para centrar mejor
         left: 50%;
         transform: translateX(-50%);
         width: 0;
@@ -97,7 +97,7 @@ $desktop: 1200px;
     font-size: 1.125rem;
     color: $contact-text-light;
     max-width: 600px;
-    margin: 0.25rem auto 0;
+    margin: 0 auto; // Removí el margen superior
     opacity: 0;
     transform: translateY(15px);
   }
